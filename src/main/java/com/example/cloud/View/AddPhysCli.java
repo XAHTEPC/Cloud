@@ -2,22 +2,18 @@ package com.example.cloud.View;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class AddPhys {
+public class AddPhysCli {
     public static Pane addPhys(int fl){
         Pane pane1 = new Pane();
         pane1.setPrefSize(1200,800);

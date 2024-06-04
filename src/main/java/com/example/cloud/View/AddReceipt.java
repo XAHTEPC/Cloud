@@ -2,8 +2,8 @@ package com.example.cloud.View;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import com.example.cloud.Model.LegalClient;
-import com.example.cloud.Model.PhysClient;
+import com.example.cloud.Model.UriCli;
+import com.example.cloud.Model.PhysCli;
 import com.example.cloud.Model.ReceiptServ;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -72,11 +72,11 @@ public class AddReceipt {
 
         TextField cliName = new TextField();
         if (fl) {
-            LegalClient legalClient = Postgre.getLegalClientbyId(id_client);
-            cliName.setText(legalClient.orgname);
+            UriCli uriCli = Postgre.getLegalClientbyId(id_client);
+            cliName.setText(uriCli.orgname);
         } else {
-            PhysClient physClient = Postgre.getPhysClientbyId(id_client);
-            cliName.setText(physClient.name);
+            PhysCli physCli = Postgre.getPhysClientbyId(id_client);
+            cliName.setText(physCli.name);
         }
         cliName.setBackground(null);
         cliName.setFont(Font.font("STXihei", 16));

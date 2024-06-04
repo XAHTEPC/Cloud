@@ -2,7 +2,7 @@ package com.example.cloud.Model;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import com.example.cloud.View.AllCodService;
+import com.example.cloud.View.AllZdanieService;
 import com.example.cloud.View.EditService;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -174,7 +174,7 @@ public class Service {
                 try {
                     Postgre.deleteServiceCod(id);
                     Front.root.getChildren().remove(Front.pane);
-                    Front.pane = AllCodService.getStartFront(id_cod,fl);
+                    Front.pane = AllZdanieService.getStartFront(id_cod,fl);
                     Front.root.getChildren().add(Front.pane);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

@@ -1,6 +1,6 @@
 package com.example.cloud.Model;
 
-public class PhysClient {
+public class PhysCli {
     public String id;
     public String name;
     public String status;
@@ -9,7 +9,7 @@ public class PhysClient {
     public String inn;
     public String mail;
 
-    public PhysClient(String id, String name, String status, String tel, String bonus, String inn, String mail) {
+    public PhysCli(String id, String name, String status, String tel, String bonus, String inn, String mail) {
         this.id = id;
         this.name = name;
         this.status = status;

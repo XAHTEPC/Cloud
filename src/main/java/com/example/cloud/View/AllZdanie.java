@@ -1,7 +1,7 @@
 package com.example.cloud.View;
 
 import com.example.cloud.Front;
-import com.example.cloud.Model.COD;
+import com.example.cloud.Model.Zdanie;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class AllCod {
+public class AllZdanie {
     static Pane pane_scroll;
     public static ScrollPane scrollPane;
 
@@ -36,13 +36,13 @@ public class AllCod {
         pane.getChildren().add(addcod);
         addcod.setOnAction(t ->{
             Front.root.getChildren().remove(Front.pane);
-            Front.pane = AddCod.addCOD(fl);
+            Front.pane = AddZdanie.addCOD(fl);
             Front.root.getChildren().add(Front.pane);
         });
         if(fl==1){
             pane.getChildren().removeAll(addcod);
         }
-        Pane paneScroll = COD.getPane(fl);
+        Pane paneScroll = Zdanie.getPane(fl);
 
         scrollPane = new ScrollPane();
         scrollPane.setLayoutX(119);

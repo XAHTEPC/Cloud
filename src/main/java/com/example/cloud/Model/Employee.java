@@ -2,7 +2,7 @@ package com.example.cloud.Model;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import com.example.cloud.View.AllCodEmployee;
+import com.example.cloud.View.AllZdanieEmployee;
 import com.example.cloud.View.EditEmpl;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -150,7 +150,7 @@ public class Employee {
                 try {
                     Postgre.deleteWork(id,id_cod);
                     Front.root.getChildren().remove(Front.pane);
-                    Front.pane = AllCodEmployee.getStartFront(id_cod);
+                    Front.pane = AllZdanieEmployee.getStartFront(id_cod);
                     Front.root.getChildren().add(Front.pane);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

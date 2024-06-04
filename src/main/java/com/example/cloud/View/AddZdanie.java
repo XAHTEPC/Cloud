@@ -2,7 +2,6 @@ package com.example.cloud.View;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import com.example.cloud.Model.COD;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -14,9 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class EditCod {
-    public static Pane editCOD(String id, int fl) throws SQLException {
-        COD cod = Postgre.getCODbyID(id);
+public class AddZdanie {
+    public static Pane addCOD(int fl){
         Pane pane1 = new Pane();
         pane1.setPrefSize(1200,800);
         pane1.setLayoutX(0);
@@ -25,7 +23,7 @@ public class EditCod {
         FileInputStream Url1;
 
         try {
-            Url1 = new FileInputStream("png/editcod.png");
+            Url1 = new FileInputStream("png/addcod.png");
         } catch (
                 FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -40,7 +38,6 @@ public class EditCod {
 
         TextField address = new TextField();
         address.setBackground(null);
-        address.setText(cod.address);
         address.setFont(Font.font("STXihei", 16));
         address.setLayoutX(230);
         address.setLayoutY(360);
@@ -48,7 +45,6 @@ public class EditCod {
         pane1.getChildren().add(address);
 
         TextField index =  new TextField();
-        index.setText(cod.index);
         index.setBackground(null);
         index.setFont(Font.font("STXihei", 16));
         index.setLayoutX(250);
@@ -57,7 +53,6 @@ public class EditCod {
         pane1.getChildren().add(index);
 
         TextField tel = new TextField();
-        tel.setText(cod.tel);
         tel.setBackground(null);
         tel.setFont(Font.font("STXihei", 16));
         tel.setLayoutX(270);
@@ -66,7 +61,6 @@ public class EditCod {
         pane1.getChildren().add(tel);
 
         TextField kol =new TextField();
-        kol.setText(cod.num_empl);
         kol.setBackground(null);
         kol.setFont(Font.font("STXihei", 16));
         kol.setLayoutX(210);
@@ -88,9 +82,9 @@ public class EditCod {
             if(!address_text.isEmpty()&&!index_text.isEmpty()&&!tel_text.isEmpty()
                     &&!kol_text.isEmpty()){
                 try {
-                    Postgre.updateCOD(cod.id,address_text,index_text,tel_text,kol_text);
+                    Postgre.addCod(address_text,index_text,tel_text,kol_text);
                     Front.root.getChildren().remove(Front.pane);
-                    Front.pane = AllCod.getStartFront(fl);
+                    Front.pane = AllZdanie.getStartFront(fl);
                     Front.root.getChildren().add(Front.pane);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -101,23 +95,22 @@ public class EditCod {
             }
         });
 
-        Button delete = new Button();
-        delete.setBackground(null);
-        delete.setLayoutX(832);
-        delete.setLayoutY(689);
-        delete.setPrefSize(130,36);
-        pane1.getChildren().add(delete);
-        delete.setOnAction(t->{
+        Button back = new Button();
+        back.setBackground(null);
+        back.setLayoutX(838);
+        back.setLayoutY(688);
+        back.setPrefSize(65,36);
+        pane1.getChildren().add(back);
+        back.setOnAction(t->{
+            Front.root.getChildren().remove(Front.pane);
             try {
-                Postgre.deleteCOD(cod.id);
-                Front.root.getChildren().remove(Front.pane);
-                Front.pane = AllCod.getStartFront(fl);
-                Front.root.getChildren().add(Front.pane);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                Front.pane = AllZdanie.getStartFront(fl);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+            Front.root.getChildren().add(Front.pane);
         });
 
         return pane1;

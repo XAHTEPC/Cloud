@@ -31,7 +31,7 @@ public class AnalystFront {
         allcod.setOnAction(t ->{
             try {
                 Front.root.getChildren().remove(Front.pane);
-                Front.pane = AllCod.getStartFront(1);
+                Front.pane = AllZdanie.getStartFront(1);
                 Front.root.getChildren().add(Front.pane);
             } catch (Exception e) {
                 throw new RuntimeException(e);

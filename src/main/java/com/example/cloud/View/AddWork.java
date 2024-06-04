@@ -4,15 +4,11 @@ import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -73,7 +69,7 @@ public class AddWork {
             try {
                 Postgre.addWork(cod, employee);
                 Front.root.getChildren().remove(Front.pane);
-                Front.pane = AllCodEmployee.getStartFront(id_cod);
+                Front.pane = AllZdanieEmployee.getStartFront(id_cod);
                 Front.root.getChildren().add(Front.pane);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -91,7 +87,7 @@ public class AddWork {
         back.setOnAction(t -> {
             Front.root.getChildren().remove(Front.pane);
             try {
-                Front.pane = AllCodEmployee.getStartFront(id_cod);
+                Front.pane = AllZdanieEmployee.getStartFront(id_cod);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (SQLException e) {

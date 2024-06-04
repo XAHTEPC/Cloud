@@ -3,11 +3,6 @@ package com.example.cloud.DataBase;
 import com.example.cloud.Front;
 import com.example.cloud.Logic.Crypto;
 import com.example.cloud.Model.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,35 +38,35 @@ public class Postgre {
                 "\taddress_zdanie, index_zdanie, tel_zdanie, empl_count_zdanie)\n" +
                 "\tVALUES ('"+address+"', '"+index+"',  '"+tel+"', '"+kol+"');");
     }
-    public static ArrayList<COD> getAllCOD() throws SQLException{
+    public static ArrayList<Zdanie> getAllCOD() throws SQLException{
         data_resSet = data_statmt.executeQuery("SELECT * \n" +
                 "\tFROM public.\"Zdanie\";");
-        ArrayList<COD> arrayList = new ArrayList<>();
+        ArrayList<Zdanie> arrayList = new ArrayList<>();
         while (data_resSet.next()){
             String id = data_resSet.getString("id_zdanie");
             String address = data_resSet.getString("address_zdanie");
             String index = data_resSet.getString("index_zdanie");
             String tel = data_resSet.getString("tel_zdanie");
             String num = data_resSet.getString("empl_count_zdanie");
-            COD cod = new COD(id,address,tel,num,index);
-            arrayList.add(cod);
+            Zdanie zdanie = new Zdanie(id,address,tel,num,index);
+            arrayList.add(zdanie);
         }
         return arrayList;
     }
-    public static COD getCODbyID(String id_cod) throws SQLException {
+    public static Zdanie getCODbyID(String id_cod) throws SQLException {
         data_resSet = data_statmt.executeQuery("SELECT * \n" +
                 "\tFROM public.\"Zdanie\" WHERE id_zdanie ='"+id_cod+"';");
-        ArrayList<COD> arrayList = new ArrayList<>();
-        COD cod = null;
+        ArrayList<Zdanie> arrayList = new ArrayList<>();
+        Zdanie zdanie = null;
         while (data_resSet.next()){
             String id = data_resSet.getString("id_zdanie");
             String address = data_resSet.getString("address_zdanie");
             String index = data_resSet.getString("index_zdanie");
             String tel = data_resSet.getString("tel_zdanie");
             String num = data_resSet.getString("empl_count_zdanie");
-            cod = new COD(id,address,tel,num,index);
+            zdanie = new Zdanie(id,address,tel,num,index);
         }
-        return cod;
+        return zdanie;
     }
     public static void deleteCOD(String id) throws SQLException {
         statmt.execute("DELETE FROM public.\"Zdanie\"\n" +
@@ -372,12 +367,12 @@ public class Postgre {
                 "SELECT id_client, uri_name_client, tel_client, mail_client, bonus_client, status_client, 'legal' as client_type\n" +
                 "FROM public.\"UriCli\";");
     }
-    public static ArrayList<LegalClient> getAllLegalClient() throws SQLException{
+    public static ArrayList<UriCli> getAllLegalClient() throws SQLException{
         data_resSet = statmt.executeQuery("SELECT id_client, status_client, name_client, " +
                 "uri_name_client, inn_client, kpp_client, ogrn_client, tel_client, mail_client, " +
                 "uri_address_client, bonus_client\n" +
-                "\tFROM public.\"UriCli\";");
-        ArrayList<LegalClient> arrayList = new ArrayList<>();
+                "\tFROM public.\"UriCli\" ORDER BY 1 asc;");
+        ArrayList<UriCli> arrayList = new ArrayList<>();
         while (data_resSet.next()){
             String id = data_resSet.getString("id_client");
             String status = data_resSet.getString("status_client");
@@ -386,16 +381,36 @@ public class Postgre {
             String bonus = data_resSet.getString("bonus_client");
             String inn = data_resSet.getString("inn_client");
             String mail = data_resSet.getString("mail_client");
-            LegalClient physClient = new LegalClient(id,name,status,tel,bonus,inn,mail);
+            UriCli physClient = new UriCli(id,name,status,tel,bonus,inn,mail);
             arrayList.add(physClient);
         }
         return arrayList;
     }
-    public static ArrayList<PhysClient> getAllPhysClient() throws SQLException{
+    public static ArrayList<UriCli> getAllLegalClient2(String element) throws SQLException{
+        data_resSet = statmt.executeQuery("SELECT id_client, status_client, name_client, " +
+                "uri_name_client, inn_client, kpp_client, ogrn_client, tel_client, mail_client, " +
+                "uri_address_client, bonus_client\n" +
+                "\tFROM public.\"UriCli\" WHERE position('" + element + "' in uri_name_client)>0 or " +
+                "position('" + element + "' in name_client)>0 or position('" + element + "' in tel_client)>0 ORDER BY 1 asc;");
+        ArrayList<UriCli> arrayList = new ArrayList<>();
+        while (data_resSet.next()){
+            String id = data_resSet.getString("id_client");
+            String status = data_resSet.getString("status_client");
+            String name = data_resSet.getString("uri_name_client");
+            String tel = data_resSet.getString("tel_client");
+            String bonus = data_resSet.getString("bonus_client");
+            String inn = data_resSet.getString("inn_client");
+            String mail = data_resSet.getString("mail_client");
+            UriCli physClient = new UriCli(id,name,status,tel,bonus,inn,mail);
+            arrayList.add(physClient);
+        }
+        return arrayList;
+    }
+    public static ArrayList<PhysCli> getAllPhysClient() throws SQLException{
         data_resSet = statmt.executeQuery("SELECT id_client, status_client, name_client, " +
                 "tel_client, bonus_client, inn_client, mail_client\n" +
-                "\tFROM public.\"PhysCli\";");
-        ArrayList<PhysClient> arrayList = new ArrayList<>();
+                "\tFROM public.\"PhysCli\" ORDER BY 1 asc;");
+        ArrayList<PhysCli> arrayList = new ArrayList<>();
         while (data_resSet.next()){
             String id = data_resSet.getString("id_client");
             String status = data_resSet.getString("status_client");
@@ -404,17 +419,38 @@ public class Postgre {
             String bonus = data_resSet.getString("bonus_client");
             String inn = data_resSet.getString("inn_client");
             String mail = data_resSet.getString("mail_client");
-            PhysClient physClient = new PhysClient(id,name,status,tel,bonus,inn,mail);
-            arrayList.add(physClient);
+            PhysCli physCli = new PhysCli(id,name,status,tel,bonus,inn,mail);
+            arrayList.add(physCli);
         }
         return arrayList;
     }
-    public static LegalClient getLegalClientbyId(String id_legal) throws SQLException {
+
+    public static ArrayList<PhysCli> getAllPhysClient2(String element) throws SQLException{
+        data_resSet = statmt.executeQuery("SELECT id_client, status_client, name_client, " +
+                "tel_client, bonus_client, inn_client, mail_client\n" +
+                "\tFROM public.\"PhysCli\" WHERE position('" + element + "' in name_client)>0 or " +
+                "position('" + element + "' in tel_client)>0" +
+                " ORDER BY 1 asc;");
+        ArrayList<PhysCli> arrayList = new ArrayList<>();
+        while (data_resSet.next()){
+            String id = data_resSet.getString("id_client");
+            String status = data_resSet.getString("status_client");
+            String name = data_resSet.getString("name_client");
+            String tel = data_resSet.getString("tel_client");
+            String bonus = data_resSet.getString("bonus_client");
+            String inn = data_resSet.getString("inn_client");
+            String mail = data_resSet.getString("mail_client");
+            PhysCli physCli = new PhysCli(id,name,status,tel,bonus,inn,mail);
+            arrayList.add(physCli);
+        }
+        return arrayList;
+    }
+    public static UriCli getLegalClientbyId(String id_legal) throws SQLException {
         data_resSet = statmt.executeQuery("SELECT id_client, status_client, name_client, " +
                 "uri_name_client, inn_client, kpp_client, ogrn_client, tel_client, mail_client, " +
                 "uri_address_client, bonus_client\n" +
                 "\tFROM public.\"UriCli\" where id_client ='"+id_legal+"';");
-        LegalClient legalClient = null;
+        UriCli uriCli = null;
         while (data_resSet.next()){
             String id = data_resSet.getString("id_client");
             String orgname = data_resSet.getString("uri_name_client");
@@ -425,9 +461,9 @@ public class Postgre {
             String name = data_resSet.getString("name_client");
             String ogrn = data_resSet.getString("ogrn_client");
             String address = data_resSet.getString("uri_address_client");
-            legalClient = new LegalClient(id,orgname,"",tel,"",inn,mail,name,address,kpp,ogrn);
+            uriCli = new UriCli(id,orgname,"",tel,"",inn,mail,name,address,kpp,ogrn);
         }
-        return legalClient;
+        return uriCli;
     }
     public static void updateLegalClient(String id, String name, String orgname, String inn, String kpp, String ogrn,
                                          String tel, String mail, String address) throws SQLException {
@@ -440,10 +476,10 @@ public class Postgre {
         statmt.execute("DELETE FROM public.\"UriCli\"\n" +
                 "\tWHERE id_client ='"+id+"';");
     }
-    public static PhysClient getPhysClientbyId(String id_phys) throws  SQLException {
+    public static PhysCli getPhysClientbyId(String id_phys) throws  SQLException {
         data_resSet = statmt.executeQuery("SELECT * \n" +
                 "\tFROM public.\"PhysCli\" WHERE id_client = '"+id_phys+"';");
-        PhysClient physClient = null;
+        PhysCli physCli = null;
         while (data_resSet.next()){
             String id = data_resSet.getString("id_client");
             String status = data_resSet.getString("status_client");
@@ -452,9 +488,9 @@ public class Postgre {
             String bonus = data_resSet.getString("bonus_client");
             String inn = data_resSet.getString("inn_client");
             String mail = data_resSet.getString("mail_client");
-            physClient = new PhysClient(id,name,status,tel,bonus,inn,mail);
+            physCli = new PhysCli(id,name,status,tel,bonus,inn,mail);
         }
-        return physClient;
+        return physCli;
     }
     public static void updatePhysClient(String id, String name, String tel, String inn, String mail) throws SQLException {
         statmt.execute("UPDATE public.\"PhysCli\"\n" +

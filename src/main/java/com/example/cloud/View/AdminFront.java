@@ -31,7 +31,7 @@ public class AdminFront {
         allcod.setOnAction(t ->{
             try {
                 Front.root.getChildren().remove(Front.pane);
-                Front.pane = AllCod.getStartFront(0);
+                Front.pane = AllZdanie.getStartFront(0);
                 Front.root.getChildren().add(Front.pane);
             } catch (Exception e) {
                 throw new RuntimeException(e);

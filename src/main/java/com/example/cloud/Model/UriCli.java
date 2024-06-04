@@ -1,6 +1,6 @@
 package com.example.cloud.Model;
 
-public class LegalClient {
+public class UriCli {
     public String id;
     public String orgname;
     public String status;
@@ -14,7 +14,7 @@ public class LegalClient {
     public String ogrn;
 
 
-    public LegalClient(String id, String name, String status, String tel, String bonus, String inn, String mail) {
+    public UriCli(String id, String name, String status, String tel, String bonus, String inn, String mail) {
         this.id = id;
         this.orgname = name;
         this.status = status;
@@ -24,7 +24,7 @@ public class LegalClient {
         this.mail = mail;
     }
 
-    public LegalClient(String id, String orgname, String status, String tel, String bonus, String inn, String mail, String name, String address, String kpp, String ogrn) {
+    public UriCli(String id, String orgname, String status, String tel, String bonus, String inn, String mail, String name, String address, String kpp, String ogrn) {
         this.id = id;
         this.orgname = orgname;
         this.status = status;

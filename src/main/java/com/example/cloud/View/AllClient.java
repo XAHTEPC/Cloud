@@ -1,13 +1,17 @@
 package com.example.cloud.View;
 
+import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
 import com.example.cloud.Model.Client;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
@@ -35,7 +39,7 @@ public class AllClient {
         pane.getChildren().add(addPhys);
         addPhys.setOnAction(t ->{
             Front.root.getChildren().remove(Front.pane);
-            Front.pane = AddPhys.addPhys(fl);
+            Front.pane = AddPhysCli.addPhys(fl);
             Front.root.getChildren().add(Front.pane);
         });
         Button addLegal = new Button();
@@ -46,7 +50,7 @@ public class AllClient {
         pane.getChildren().add(addLegal);
         addLegal.setOnAction(t ->{
             Front.root.getChildren().remove(Front.pane);
-            Front.pane = AddLegal.addLegal(fl);
+            Front.pane = AddUriCli.addLegal(fl);
             Front.root.getChildren().add(Front.pane);
         });
         if(fl==1){
@@ -56,10 +60,10 @@ public class AllClient {
 
         scrollPane = new ScrollPane();
         scrollPane.setLayoutX(119);
-        scrollPane.setLayoutY(160);
+        scrollPane.setLayoutY(210);
         scrollPane.setMaxHeight(450);
         scrollPane.setMaxWidth(990);
-        scrollPane.setMinHeight(450);
+        scrollPane.setMinHeight(400);
         scrollPane.setMinWidth(990);
         scrollPane.setStyle("-fx-background: rgb(217, 234, 245);-fx-background-color: rgb(217, 234, 245);");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -67,6 +71,36 @@ public class AllClient {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(paneScroll);
         pane.getChildren().add(scrollPane);
+
+        TextField findText = new TextField();
+        findText.setPrefSize(200,63);
+        findText.setLayoutX(850);
+        findText.setLayoutY(158);
+        findText.setPromptText("ФИО или номер телефона");
+        findText.setFont(Font.font("STXihei", 14));
+        findText.setBackground(null);
+        pane.getChildren().add(findText);
+
+
+        Button find = new Button();
+        find.setBackground(null);
+        find.setLayoutX(840);
+        find.setLayoutY(176);
+        find.setPrefSize(19,19);
+        pane.getChildren().add(find);
+        find.setOnAction(t->{
+            String f = findText.getText();
+            if(!f.isEmpty()){
+                Pane pane1 = null;
+                try {
+                    pane1 = Client.getPane2(fl,f);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                scrollPane.setContent(pane1);
+            }
+
+        });
 
 
         Button back = new Button();

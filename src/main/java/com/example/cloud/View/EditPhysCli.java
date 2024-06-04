@@ -2,7 +2,7 @@ package com.example.cloud.View;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import com.example.cloud.Model.PhysClient;
+import com.example.cloud.Model.PhysCli;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -14,9 +14,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class EditPhys {
+public class EditPhysCli {
         public static Pane editPhys(String id_phys, int fl) throws SQLException {
-            PhysClient physClient = Postgre.getPhysClientbyId(id_phys);
+            PhysCli physCli = Postgre.getPhysClientbyId(id_phys);
             Pane pane1 = new Pane();
             pane1.setPrefSize(1200,800);
             pane1.setLayoutX(0);
@@ -38,7 +38,7 @@ public class EditPhys {
 
 
             TextField name = new TextField();
-            name.setText(physClient.name);
+            name.setText(physCli.name);
             name.setBackground(null);
             name.setFont(Font.font("STXihei", 16));
             name.setLayoutX(210);
@@ -47,7 +47,7 @@ public class EditPhys {
             pane1.getChildren().add(name);
 
             TextField mail =  new TextField();
-            mail.setText(physClient.mail);
+            mail.setText(physCli.mail);
             mail.setBackground(null);
             mail.setFont(Font.font("STXihei", 16));
             mail.setLayoutX(230);
@@ -56,7 +56,7 @@ public class EditPhys {
             pane1.getChildren().add(mail);
 
             TextField tel = new TextField();
-            tel.setText(physClient.tel);
+            tel.setText(physCli.tel);
             tel.setBackground(null);
             tel.setFont(Font.font("STXihei", 16));
             tel.setLayoutX(240);
@@ -65,7 +65,7 @@ public class EditPhys {
             pane1.getChildren().add(tel);
 
             TextField inn =new TextField();
-            inn.setText(physClient.inn);
+            inn.setText(physCli.inn);
             inn.setBackground(null);
             inn.setFont(Font.font("STXihei", 16));
             inn.setLayoutX(200);

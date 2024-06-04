@@ -2,9 +2,9 @@ package com.example.cloud.Model;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import com.example.cloud.View.AllCodEmployee;
-import com.example.cloud.View.AllCodService;
-import com.example.cloud.View.EditCod;
+import com.example.cloud.View.AllZdanieEmployee;
+import com.example.cloud.View.AllZdanieService;
+import com.example.cloud.View.EditZdanie;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -15,14 +15,14 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class COD {
+public class Zdanie {
     public String id;
     public String address;
     public String index;
     public String tel;
     public String num_empl;
 
-    public COD(String id, String address, String tel, String num_empl, String index) {
+    public Zdanie(String id, String address, String tel, String num_empl, String index) {
         this.id = id;
         this.address = address;
         this.tel = tel;
@@ -58,7 +58,7 @@ public class COD {
         num_empl_text.setLayoutY(60);
         num_empl_text.setFont(Font.font("Verdana",13));
 
-        ArrayList<COD> mas = Postgre.getAllCOD();
+        ArrayList<Zdanie> mas = Postgre.getAllCOD();
         int u = 80;
         for(int i=0; i<mas.size();i++, u+=70){
             TextField num = new TextField();
@@ -126,7 +126,7 @@ public class COD {
                 edit.setOnAction(t->{
                     Front.root.getChildren().removeAll(Front.pane);
                     try {
-                        Front.pane = EditCod.editCOD(id,fl);
+                        Front.pane = EditZdanie.editCOD(id,fl);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -139,7 +139,7 @@ public class COD {
                 employee.setOnAction(t->{
                     Front.root.getChildren().remove(Front.pane);
                     try {
-                        Front.pane = AllCodEmployee.getStartFront(id);
+                        Front.pane = AllZdanieEmployee.getStartFront(id);
                         Front.root.getChildren().add(Front.pane);
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
@@ -155,7 +155,7 @@ public class COD {
                 service.setOnAction(t->{
                     Front.root.getChildren().remove(Front.pane);
                     try {
-                        Front.pane = AllCodService.getStartFront(id,fl);
+                        Front.pane = AllZdanieService.getStartFront(id,fl);
                         Front.root.getChildren().add(Front.pane);
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);

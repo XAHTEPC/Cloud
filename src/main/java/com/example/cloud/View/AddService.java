@@ -3,7 +3,6 @@ package com.example.cloud.View;
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
 import com.example.cloud.Model.ReceiptServ;
-import com.example.cloud.Model.Service;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -354,7 +353,7 @@ static String id_cod;
                     }
                     Postgre.addServiceCod(id_serv,id_cod);
                     Front.root.getChildren().remove(Front.pane);
-                    Front.pane = AllCodService.getStartFront(id_cod,fl);
+                    Front.pane = AllZdanieService.getStartFront(id_cod,fl);
                     Front.root.getChildren().add(Front.pane);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

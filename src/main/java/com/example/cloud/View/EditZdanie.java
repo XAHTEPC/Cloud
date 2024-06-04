@@ -2,23 +2,21 @@ package com.example.cloud.View;
 
 import com.example.cloud.DataBase.Postgre;
 import com.example.cloud.Front;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import com.example.cloud.Model.Zdanie;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class AddCod {
-    public static Pane addCOD(int fl){
+public class EditZdanie {
+    public static Pane editCOD(String id, int fl) throws SQLException {
+        Zdanie zdanie = Postgre.getCODbyID(id);
         Pane pane1 = new Pane();
         pane1.setPrefSize(1200,800);
         pane1.setLayoutX(0);
@@ -27,7 +25,7 @@ public class AddCod {
         FileInputStream Url1;
 
         try {
-            Url1 = new FileInputStream("png/addcod.png");
+            Url1 = new FileInputStream("png/editcod.png");
         } catch (
                 FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -42,6 +40,7 @@ public class AddCod {
 
         TextField address = new TextField();
         address.setBackground(null);
+        address.setText(zdanie.address);
         address.setFont(Font.font("STXihei", 16));
         address.setLayoutX(230);
         address.setLayoutY(360);
@@ -49,6 +48,7 @@ public class AddCod {
         pane1.getChildren().add(address);
 
         TextField index =  new TextField();
+        index.setText(zdanie.index);
         index.setBackground(null);
         index.setFont(Font.font("STXihei", 16));
         index.setLayoutX(250);
@@ -57,6 +57,7 @@ public class AddCod {
         pane1.getChildren().add(index);
 
         TextField tel = new TextField();
+        tel.setText(zdanie.tel);
         tel.setBackground(null);
         tel.setFont(Font.font("STXihei", 16));
         tel.setLayoutX(270);
@@ -65,6 +66,7 @@ public class AddCod {
         pane1.getChildren().add(tel);
 
         TextField kol =new TextField();
+        kol.setText(zdanie.num_empl);
         kol.setBackground(null);
         kol.setFont(Font.font("STXihei", 16));
         kol.setLayoutX(210);
@@ -86,9 +88,9 @@ public class AddCod {
             if(!address_text.isEmpty()&&!index_text.isEmpty()&&!tel_text.isEmpty()
                     &&!kol_text.isEmpty()){
                 try {
-                    Postgre.addCod(address_text,index_text,tel_text,kol_text);
+                    Postgre.updateCOD(zdanie.id,address_text,index_text,tel_text,kol_text);
                     Front.root.getChildren().remove(Front.pane);
-                    Front.pane = AllCod.getStartFront(fl);
+                    Front.pane = AllZdanie.getStartFront(fl);
                     Front.root.getChildren().add(Front.pane);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -99,22 +101,23 @@ public class AddCod {
             }
         });
 
-        Button back = new Button();
-        back.setBackground(null);
-        back.setLayoutX(838);
-        back.setLayoutY(688);
-        back.setPrefSize(65,36);
-        pane1.getChildren().add(back);
-        back.setOnAction(t->{
-            Front.root.getChildren().remove(Front.pane);
+        Button delete = new Button();
+        delete.setBackground(null);
+        delete.setLayoutX(832);
+        delete.setLayoutY(689);
+        delete.setPrefSize(130,36);
+        pane1.getChildren().add(delete);
+        delete.setOnAction(t->{
             try {
-                Front.pane = AllCod.getStartFront(fl);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+                Postgre.deleteCOD(zdanie.id);
+                Front.root.getChildren().remove(Front.pane);
+                Front.pane = AllZdanie.getStartFront(fl);
+                Front.root.getChildren().add(Front.pane);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
-            Front.root.getChildren().add(Front.pane);
         });
 
         return pane1;

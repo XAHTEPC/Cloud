@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class AllCodEmployee {
+public class AllZdanieEmployee {
     public static ScrollPane scrollPane;
 
     public static Pane getStartFront(String id) throws FileNotFoundException, SQLException {
