@@ -1,0 +1,73 @@
+package com.example.cloud.View;
+
+import com.example.cloud.Front;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class ManagerFront {
+    public static Pane getStartFront() throws FileNotFoundException {
+        Pane pane = new Pane();
+        pane.setLayoutX(0);
+        pane.setLayoutY(0);
+        FileInputStream Url;
+        Url = new FileInputStream("png/manager.png");
+        Image url = new Image(Url);
+        ImageView front = new ImageView(url);
+        front.setX(0);
+        front.setY(0);
+        pane.getChildren().add(front);
+
+        Button exit = new Button();
+        exit.setBackground(null);
+        exit.setLayoutX(1045);
+        exit.setLayoutY(38);
+        exit.setPrefSize(69,24);
+        pane.getChildren().add(exit);
+        exit.setOnAction(t ->{
+            try {
+                Front.exit();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Button allClient = new Button();
+        allClient.setBackground(null);
+        allClient.setLayoutX(119);
+        allClient.setLayoutY(654);
+        allClient.setPrefSize(369,70);
+        pane.getChildren().add(allClient);
+        allClient.setOnAction(t1 -> {
+            try {
+                Front.root.getChildren().remove(Front.pane);
+                Front.pane = AllClient.getStartFront(2);
+                Front.root.getChildren().add(Front.pane);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Button allreceipt = new Button();
+        allreceipt.setBackground(null);
+        allreceipt.setLayoutX(745);
+        allreceipt.setLayoutY(102);
+        allreceipt.setPrefSize(369,70);
+        pane.getChildren().add(allreceipt);
+        allreceipt.setOnAction(t1 -> {
+            try {
+                Front.root.getChildren().remove(Front.pane);
+                Front.pane = AllReceipt.getStartFront(2);
+                Front.root.getChildren().add(Front.pane);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+        return pane;
+    }
+}
